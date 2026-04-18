@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Acadêmico | Yasmin Vitórya</title>
+    <style>
+        :root {
+            --primary-color: #0d1b2a; /* Azul Marinho Profundo (Deep Winter) */
+            --secondary-color: #1b263b; /* Azul Petróleo */
+            --accent-color: #e0e1dd; /* Cinza Gelo */
+            --text-color: #ffffff;
+            --bg-color: #0d1b2a;
+            --card-bg: #415a77;
+            --highlight: #778da9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 3px solid var(--highlight);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--highlight);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            border-left: 5px solid var(--highlight);
+            padding-left: 15px;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--highlight);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+        }
+
+        /* Estilo Técnico para Monitoria */
+        .academic-badge {
+            background: #990033; /* Vinho Deep Winter */
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Portal Acadêmico de Medicina</h1>
+    <p>Repositório Técnico e Monitoria | Yasmin Vitórya</p>
+</header>
+
+<nav>
+    <a href="#inicio">Início</a>
+    <a href="#materiais">Materiais</a>
+    <a href="#tecnica">Técnica Cirúrgica</a>
+    <a href="#quiz">Autoavaliação</a>
+</nav>
+
+<div class="container">
+    <section id="inicio" class="section">
+        <h2>Bem-vinda ao seu Hub Acadêmico</h2>
+        <p>Este portal foi estruturado para centralizar o conhecimento médico de forma técnica e organizada. Aqui, os alunos encontram desde objetivos de PBL detalhados até roteiros práticos de simulação clínica.</p>
+    </section>
+
+    <section id="materiais" class="section">
+        <h2>Materiais de Estudo</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Resumos de Farmacologia <span class="academic-badge">Novo</span></h3>
+                <p>Mecanismos de ação, farmacocinética e interações medicamentosas explicadas de forma clara.</p>
+                <a href="#" class="btn">Acessar PDF</a>
+            </div>
+            <div class="card">
+                <h3>Objetivos de PBL</h3>
+                <p>Síntese dos principais conceitos discutidos nas tutorias semanais, focada em medicina baseada em evidências.</p>
+                <a href="#" class="btn">Ver Lista</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tecnica" class="section">
+        <h2>Monitoria: Técnica Cirúrgica</h2>
+        <div class="card">
+            <h3>Roteiro de Suturas e Instrumentação</h3>
+            <p>Guia detalhado sobre tipos de agulhas, fios de sutura e manuseio correto de porta-agulhas e pinças. Ideal para prática em simuladores.</p>
+            <p><strong>Termos Técnicos:</strong> Anastomose, Síntese tecidual, Hemostasia.</p>
+            <a href="#" class="btn">Abrir Guia</a>
+        </div>
+    </section>
+
+    <section id="quiz" class="section">
+        <h2>Espaço de Autoavaliação</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Quiz de Anatomia</h3>
+                <p>Teste seus conhecimentos sobre topografia e estruturas anatômicas.</p>
+                <a href="#" class="btn">Iniciar Quiz</a>
+            </div>
+            <div class="card">
+                <h3>Casos Clínicos</h3>
+                <p>Simulações de anamnese e raciocínio diagnóstico para prática clínica.</p>
+                <a href="#" class="btn">Analisar Caso</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    &copy; 2026 Yasmin Vitórya - Monitoria Acadêmica de Medicina
+</footer>
+
+</body>
+</html>
