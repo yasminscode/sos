@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progresso de Estudos — Envelhecimento e Lesões Celulares</title>
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --card: #ffffff;
+      --text: #171923;
+      --muted: #687083;
+      --line: #e5e7ef;
+      --accent: #6d5dfc;
+      --accent2: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 10px 28px rgba(17, 24, 39, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(109, 93, 252, 0.16), transparent 28rem),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 38px 20px 20px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+      padding: 28px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 850px;
+      font-size: 1.02rem;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px 48px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .panel, .module, .guide {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 20px;
+    }
+
+    .progress-wrap {
+      height: 18px;
+      background: #eef0f8;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #e4e6f2;
+      margin: 12px 0 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .stats {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .stat strong {
+      color: var(--text);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button, .fake-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 13px;
+      cursor: pointer;
+      font-weight: 650;
+      font-size: 0.92rem;
+      transition: 0.18s ease;
+    }
+
+    button:hover, .fake-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .danger {
+      color: var(--danger);
+    }
+
+    input[type="search"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.98rem;
+      outline: none;
+    }
+
+    input[type="search"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(109, 93, 252, 0.12);
+    }
+
+    .guide {
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+
+    .guide h2, .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .guide ol {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .guide li { margin: 4px 0; }
+
+    .module {
+      margin: 14px 0;
+      overflow: hidden;
+    }
+
+    .module-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #fbfbff);
+    }
+
+    .number {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(109, 93, 252, 0.1);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .module-title h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .module-title p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      border-radius: 999px;
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      padding: 5px 9px;
+      font-size: 0.78rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .module-body {
+      padding: 6px 20px 18px;
+      display: block;
+    }
+
+    .module.collapsed .module-body { display: none; }
+
+    .topic {
+      border-bottom: 1px dashed var(--line);
+      padding: 14px 0;
+    }
+
+    .topic:last-child { border-bottom: 0; }
+
+    .topic-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-weight: 760;
+    }
+
+    .topic-main input {
+      transform: translateY(4px);
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .subtopics {
+      margin: 8px 0 0 28px;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .subtopics li { margin: 5px 0; }
+
+    .done-text {
+      text-decoration: line-through;
+      opacity: 0.55;
+    }
+
+    .hidden { display: none !important; }
+
+    .footer-note {
+      color: var(--muted);
+      margin-top: 22px;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .module-header {
+        grid-template-columns: auto 1fr;
+      }
+
+      .badge {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .controls, input[type="search"] { display: none; }
+      .panel, .module, .guide, .hero { box-shadow: none; }
+      .module.collapsed .module-body { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <section class="hero">
+      <h1>Mapa de progresso — Envelhecimento e lesões celulares</h1>
+      <p class="subtitle">
+        Conteúdo organizado em uma ordem lógica: primeiro a base de patologia celular, depois mecanismos do envelhecimento,
+        alterações por sistemas e, por fim, geriatria aplicada. Marca sem dó, Yasmin. Checkbox não morde.
+      </p>
+    </section>
+  </header>
+
+  <main>
+    <section class="dashboard">
+      <div class="panel">
+        <h2>Seu progresso geral</h2>
+        <div class="progress-wrap" aria-label="Progresso geral">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stats">
+          <span class="stat"><strong id="percent">0%</strong> concluído</span>
+          <span class="stat"><strong id="doneCount">0</strong>/<strong id="totalCount">0</strong> tópicos marcados</span>
+          <span class="stat">Última atualização: <strong id="lastUpdate">—</strong></span>
+        </div>
+        <div class="controls">
+          <button class="primary" id="expandAll">Abrir tudo</button>
+          <button id="collapseAll">Fechar tudo</button>
+          <button id="printPage">Imprimir / salvar PDF</button>
+          <button class="danger" id="resetProgress">Zerar progresso</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Buscar conteúdo</h2>
+        <input id="searchInput" type="search" placeholder="Ex.: sarcopenia, necrose, AGA, cardiovascular..." />
+        <p class="subtitle" style="font-size: .92rem; margin-top: 10px;">
+          Use para achar rapidinho um tema antes da prova, sem virar exploradora de PDF perdido.
+        </p>
+      </div>
+    </section>
+
+    <section class="guide">
+      <h2>Melhor ordem de estudo</h2>
+      <ol>
+        <li>Comece por lesão, adaptação e morte celular, porque isso sustenta todo o resto.</li>
+        <li>Depois estude mecanismos celulares e moleculares do envelhecimento.</li>
+        <li>Em seguida vá para alterações histológicas e envelhecimento por sistemas.</li>
+        <li>Finalize com síndromes geriátricas, avaliação geriátrica, prevenção e fim de vida.</li>
+      </ol>
+    </section>
+
+    <div id="modules"></div>
+
+    <p class="footer-note">
+      Dica esperta: ao terminar cada módulo, revise em 24h e depois em 7 dias. Seu hipocampo agradece e para de pedir demissão.
+    </p>
+  </main>
+
+  <script>
+    const modules = [
+      {
+        title: "Base de patologia celular",
+        why: "Fundação para entender envelhecimento tecidual e perda funcional.",
+        topics: [
+          {
+            name: "Adaptações celulares",
+            subs: [
+              "Hipertrofia: conceito, causas e exemplos clínicos no idoso",
+              "Atrofia: desuso, denervação, isquemia, desnutrição e envelhecimento",
+              "Hiperplasia: quando ocorre e como diferenciar de hipertrofia",
+              "Metaplasia: conceito, estímulos crônicos e risco de progressão",
+              "Diferença entre adaptação fisiológica e patológica"
+            ]
+          },
+          {
+            name: "Lesões celulares reversíveis — degeneração",
+            subs: [
+              "Degeneração hidrópica: mecanismo e significado",
+              "Esteatose: acúmulo lipídico e órgãos mais afetados",
+              "Tumefação celular e alterações de membrana",
+              "Causas gerais: hipóxia, toxinas, alterações metabólicas",
+              "Como reconhecer que a lesão ainda é reversível"
+            ]
+          },
+          {
+            name: "Lesões celulares irreversíveis",
+            subs: [
+              "Ponto de não retorno da lesão celular",
+              "Dano mitocondrial grave e perda de ATP",
+              "Ruptura de membranas e influxo de cálcio",
+              "Relação com envelhecimento, fragilidade e baixa reserva funcional"
+            ]
+          },
+          {
+            name: "Apoptose",
+            subs: [
+              "Conceito: morte celular programada",
+              "Via intrínseca e via extrínseca",
+              "Caspases e fragmentação celular",
+              "Diferenças morfológicas entre apoptose e necrose",
+              "Papel na homeostase tecidual e no envelhecimento"
+            ]
+          },
+          {
+            name: "Necrose",
+            subs: [
+              "Conceito e principais causas",
+              "Padrões: coagulativa, liquefativa, caseosa, gordurosa e fibrinoide",
+              "Evolução dos processos de necrose",
+              "Inflamação associada à necrose",
+              "Exemplos clínicos: infarto, AVC, pancreatite e infecções"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Conceitos fundamentais do envelhecimento",
+        why: "Aqui você separa envelhecimento normal de doença, que é o pulo do gato da geriatria.",
+        topics: [
+          {
+            name: "Definição de envelhecimento",
+            subs: [
+              "Envelhecimento como processo biológico progressivo e heterogêneo",
+              "Diferença entre idade cronológica, biológica, funcional e social",
+              "Declínio de reserva fisiológica",
+              "Por que envelhecer não é sinônimo de adoecer"
+            ]
+          },
+          {
+            name: "Senescência versus senilidade",
+            subs: [
+              "Senescência: alterações esperadas do envelhecimento",
+              "Senilidade: alterações patológicas",
+              "Exemplos práticos para diferenciar normalidade e doença",
+              "Como evitar idadismo no raciocínio clínico"
+            ]
+          },
+          {
+            name: "Heterogeneidade do envelhecimento",
+            subs: [
+              "Por que idosos da mesma idade podem ser muito diferentes",
+              "Influência de genética, ambiente, estilo de vida e doenças crônicas",
+              "Determinantes sociais: renda, escolaridade, moradia, acesso à saúde",
+              "Autonomia, independência e vulnerabilidade"
+            ]
+          },
+          {
+            name: "Transição demográfica e epidemiológica",
+            subs: [
+              "Aumento da proporção de idosos na população",
+              "Mudança de doenças infecciosas para doenças crônicas não transmissíveis",
+              "Impacto no SUS e no cuidado longitudinal",
+              "Multimorbidade e necessidade de cuidado integrado"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Bases celulares e moleculares do envelhecimento",
+        why: "Parte mais mecanística: explica o porquê do corpo ir perdendo desempenho.",
+        topics: [
+          {
+            name: "Senescência celular",
+            subs: [
+              "Conceito de célula senescente",
+              "Parada do ciclo celular",
+              "SASP: fenótipo secretor associado à senescência",
+              "Relação com inflamação crônica e perda funcional"
+            ]
+          },
+          {
+            name: "Encurtamento telomérico",
+            subs: [
+              "Função dos telômeros",
+              "Limite replicativo",
+              "Telomerase e tecidos proliferativos",
+              "Relação com senescência e reparo tecidual"
+            ]
+          },
+          {
+            name: "Instabilidade genômica e reparo de DNA",
+            subs: [
+              "Dano acumulado ao DNA",
+              "Tipos gerais de agressão: radiação, radicais livres e erros replicativos",
+              "Mecanismos de reparo",
+              "Consequências: mutações, câncer, apoptose ou senescência"
+            ]
+          },
+          {
+            name: "Proteostase, autofagia e acúmulo de dano",
+            subs: [
+              "Proteostase: síntese, dobramento e degradação de proteínas",
+              "Proteínas mal dobradas e agregados",
+              "Autofagia e limpeza celular",
+              "Relação com doenças neurodegenerativas"
+            ]
+          },
+          {
+            name: "Disfunção mitocondrial e estresse oxidativo",
+            subs: [
+              "Papel da mitocôndria na produção de ATP",
+              "Espécies reativas de oxigênio",
+              "Dano oxidativo a lipídios, proteínas e DNA",
+              "Queda de energia celular e declínio funcional"
+            ]
+          },
+          {
+            name: "Alterações epigenéticas",
+            subs: [
+              "Metilação do DNA e modificações de histonas",
+              "Mudança de expressão gênica com a idade",
+              "Relação com ambiente e estilo de vida",
+              "Relógios epigenéticos: noção geral"
+            ]
+          },
+          {
+            name: "Inflamação crônica de baixo grau — inflammaging",
+            subs: [
+              "Conceito de inflammaging",
+              "Fontes de inflamação persistente no envelhecimento",
+              "Relação com aterosclerose, sarcopenia, fragilidade e diabetes",
+              "Diferença entre inflamação aguda protetora e inflamação crônica deletéria"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Alterações teciduais e histológicas relacionadas à idade",
+        why: "A ponte entre célula e clínica: o microscópio começando a virar sintoma.",
+        topics: [
+          {
+            name: "Processos adaptativos e degenerativos no idoso",
+            subs: [
+              "Adaptação celular em tecidos envelhecidos",
+              "Degeneração e deposição de substâncias",
+              "Redução de regeneração e cicatrização",
+              "Perda de elasticidade, vascularização e massa funcional"
+            ]
+          },
+          {
+            name: "Processos celulares irreversíveis do envelhecimento",
+            subs: [
+              "Acúmulo de células senescentes",
+              "Apoptose e necrose em tecidos com baixa reserva",
+              "Fibrose e substituição por tecido conjuntivo",
+              "Consequência clínica: perda de função e maior vulnerabilidade"
+            ]
+          },
+          {
+            name: "Alterações histológicas gerais",
+            subs: [
+              "Redução de massa celular funcional",
+              "Aumento relativo de tecido adiposo ou fibroso",
+              "Alterações vasculares e microcirculatórias",
+              "Diminuição de água corporal e mudanças na matriz extracelular"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Envelhecimento por sistemas — morfologia, fisiologia e clínica",
+        why: "Aqui mora boa parte da prova: sistema por sistema, sem bagunça.",
+        topics: [
+          {
+            name: "Sistema nervoso",
+            subs: [
+              "Redução de velocidade de processamento e reflexos",
+              "Alterações de memória esperadas versus demência",
+              "Sono, equilíbrio e marcha",
+              "Neuroplasticidade e reserva cognitiva",
+              "Risco de delirium e vulnerabilidade a fármacos"
+            ]
+          },
+          {
+            name: "Sistema cardiovascular",
+            subs: [
+              "Rigidez arterial e aumento da pressão sistólica",
+              "Alterações de complacência ventricular",
+              "Aterosclerose e fatores de risco",
+              "Redução de resposta ao esforço",
+              "Conexão com hipertensão e insuficiência cardíaca"
+            ]
+          },
+          {
+            name: "Sistema digestório",
+            subs: [
+              "Alterações de mastigação, deglutição e paladar",
+              "Motilidade gastrointestinal e constipação",
+              "Absorção, nutrição e risco de desnutrição",
+              "Fígado: metabolismo de fármacos e reserva funcional"
+            ]
+          },
+          {
+            name: "Sistema renal",
+            subs: [
+              "Redução da taxa de filtração glomerular",
+              "Alterações de concentração e diluição urinária",
+              "Equilíbrio hidroeletrolítico",
+              "Ajuste de doses de medicamentos",
+              "Risco de lesão renal aguda"
+            ]
+          },
+          {
+            name: "Sistema respiratório",
+            subs: [
+              "Redução de elasticidade pulmonar",
+              "Alterações da caixa torácica e músculos respiratórios",
+              "Diminuição de reserva ventilatória",
+              "Tosse menos eficaz e risco de infecções",
+              "Relação com DPOC e dispneia"
+            ]
+          },
+          {
+            name: "Sistema muscular",
+            subs: [
+              "Sarcopenia: conceito e consequências",
+              "Perda de força, potência e massa muscular",
+              "Impacto em quedas, independência e fragilidade",
+              "Exercício resistido e nutrição como prevenção"
+            ]
+          },
+          {
+            name: "Sistema endócrino",
+            subs: [
+              "Alterações de sensibilidade à insulina",
+              "Mudanças hormonais com a idade",
+              "Diabetes no idoso: particularidades gerais",
+              "Tireoide: sintomas atípicos e cautela diagnóstica"
+            ]
+          },
+          {
+            name: "Sistema imunológico",
+            subs: [
+              "Imunossenescência",
+              "Menor resposta vacinal",
+              "Maior risco de infecções",
+              "Inflammaging e doenças crônicas",
+              "Importância da vacinação e prevenção"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Avaliação Geriátrica Ampla e funcionalidade",
+        why: "É o módulo que transforma conteúdo em cuidado real do paciente idoso.",
+        topics: [
+          {
+            name: "Avaliação Geriátrica Ampla — AGA",
+            subs: [
+              "Objetivo da AGA",
+              "Funcionalidade, mobilidade e risco de quedas",
+              "Cognição, humor e sono",
+              "Nutrição e perda ponderal",
+              "Comorbidades e polifarmácia",
+              "Suporte social, ambiente e segurança"
+            ]
+          },
+          {
+            name: "Independência funcional",
+            subs: [
+              "ABVD: banho, vestir-se, alimentação, continência, transferência e higiene",
+              "AIVD: finanças, compras, transporte, telefone, medicações e tarefas domésticas",
+              "Autonomia versus independência",
+              "Como funcionalidade muda plano de cuidado e segurança"
+            ]
+          },
+          {
+            name: "Fragilidade",
+            subs: [
+              "Conceito de síndrome de fragilidade",
+              "Baixa reserva fisiológica",
+              "Perda de peso, exaustão, lentidão, fraqueza e baixa atividade",
+              "Relação com quedas, internação e mortalidade",
+              "Importância de reconhecer antes de procedimentos"
+            ]
+          },
+          {
+            name: "Polifarmácia",
+            subs: [
+              "Conceito e riscos",
+              "Interações medicamentosas",
+              "Medicamentos potencialmente inapropriados",
+              "Adesão, simplificação terapêutica e revisão periódica"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Instabilidade postural, quedas e traumatismos",
+        why: "Tema clássico, frequente e muito cobrado porque muda prognóstico de verdade.",
+        topics: [
+          {
+            name: "Instabilidade postural",
+            subs: [
+              "Equilíbrio, propriocepção, visão e sistema vestibular",
+              "Marcha senil versus marcha patológica",
+              "Fraqueza muscular e sarcopenia",
+              "Hipotensão postural e medicamentos"
+            ]
+          },
+          {
+            name: "Quedas no idoso",
+            subs: [
+              "Fatores intrínsecos: doenças, fraqueza, visão, cognição e medicamentos",
+              "Fatores extrínsecos: tapetes, iluminação, calçados e ambiente",
+              "Consequências: fraturas, TCE, medo de cair e declínio funcional",
+              "Abordagem inicial após queda",
+              "Estratégias gerais de prevenção"
+            ]
+          },
+          {
+            name: "Traumatismos e fraturas",
+            subs: [
+              "Osteoporose e risco de fratura",
+              "Fratura de quadril e impacto funcional",
+              "Traumatismo cranioencefálico e anticoagulação",
+              "Quando encaminhar e sinais de alerta"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Prevenção, promoção de saúde e imunização",
+        why: "A parte 'não vamos deixar dar ruim antes de dar ruim'. Medicina raiz, só que inteligente.",
+        topics: [
+          {
+            name: "Promoção de saúde no idoso",
+            subs: [
+              "Atividade física: aeróbico, força, equilíbrio e flexibilidade",
+              "Nutrição: proteína, hidratação e prevenção de desnutrição",
+              "Sono, saúde mental e vínculos sociais",
+              "Prevenção de quedas e adaptação ambiental"
+            ]
+          },
+          {
+            name: "Imunização do idoso",
+            subs: [
+              "Princípios gerais do calendário vacinal",
+              "Influenza, COVID-19, pneumocócicas, herpes-zóster e dupla adulto: noções",
+              "Imunossenescência e resposta vacinal reduzida",
+              "Checar contraindicações e situação vacinal individual"
+            ]
+          },
+          {
+            name: "Rastreios e cuidado longitudinal",
+            subs: [
+              "Rastreios individualizados por expectativa de vida e funcionalidade",
+              "Controle de doenças crônicas",
+              "Avaliação de visão, audição e saúde bucal",
+              "Prevenção de isolamento social e violência contra o idoso"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Síndromes geriátricas e doenças prevalentes",
+        why: "Agora junta tudo: fisiopatologia, diagnóstico, diferencial, manejo e prognóstico.",
+        topics: [
+          {
+            name: "Hipertensão, aterosclerose e doença cardiovascular",
+            subs: [
+              "Epidemiologia no idoso",
+              "Rigidez arterial e lesão endotelial",
+              "Diagnóstico e metas individualizadas",
+              "Princípios gerais de manejo e risco de hipotensão"
+            ]
+          },
+          {
+            name: "Insuficiência cardíaca",
+            subs: [
+              "Fisiopatologia geral",
+              "Sintomas típicos e apresentações atípicas",
+              "Diagnóstico diferencial de dispneia e edema",
+              "Manejo geral e prognóstico"
+            ]
+          },
+          {
+            name: "DPOC e doenças respiratórias crônicas",
+            subs: [
+              "Fatores de risco e fisiopatologia",
+              "Dispneia, tosse, exacerbações e limitação funcional",
+              "Diagnóstico e diferencial",
+              "Princípios de tratamento e prevenção de infecções"
+            ]
+          },
+          {
+            name: "Diabetes no idoso",
+            subs: [
+              "Resistência insulínica e alterações metabólicas",
+              "Risco de hipoglicemia",
+              "Metas individualizadas",
+              "Complicações micro e macrovasculares"
+            ]
+          },
+          {
+            name: "Demências",
+            subs: [
+              "Diferença entre envelhecimento normal, comprometimento cognitivo e demência",
+              "Alzheimer, vascular e outras demências: noções",
+              "Avaliação cognitiva e funcional",
+              "Diagnóstico diferencial: depressão, delirium, fármacos e causas reversíveis"
+            ]
+          },
+          {
+            name: "Delirium",
+            subs: [
+              "Conceito: início agudo e curso flutuante",
+              "Fatores precipitantes: infecção, medicamentos, dor, desidratação",
+              "Diferença entre delirium, demência e depressão",
+              "Prevenção e abordagem inicial"
+            ]
+          },
+          {
+            name: "Depressão no idoso",
+            subs: [
+              "Apresentações típicas e atípicas",
+              "Relação com luto, isolamento, dor e comorbidades",
+              "Risco de pseudodemência",
+              "Triagem, suporte e encaminhamento"
+            ]
+          },
+          {
+            name: "Osteoporose e osteoartrose",
+            subs: [
+              "Perda de massa óssea e risco de fraturas",
+              "Dor, rigidez e limitação funcional",
+              "Diagnóstico e diagnóstico diferencial",
+              "Exercício, prevenção de quedas e manejo geral"
+            ]
+          },
+          {
+            name: "Incontinência urinária",
+            subs: [
+              "Tipos: esforço, urgência, transbordamento e funcional",
+              "Impacto social e risco de quedas",
+              "Causas reversíveis",
+              "Abordagem inicial e medidas gerais"
+            ]
+          },
+          {
+            name: "Dor crônica",
+            subs: [
+              "Avaliação multidimensional da dor",
+              "Impacto em sono, humor e funcionalidade",
+              "Riscos de automedicação e polifarmácia",
+              "Manejo multimodal"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Vascular periférico no idoso",
+        why: "Tema menor, mas importante para mobilidade, feridas e prevenção de complicações.",
+        topics: [
+          {
+            name: "Insuficiência venosa crônica",
+            subs: [
+              "Fisiopatologia venosa",
+              "Edema, varizes, dermatite ocre e úlceras venosas",
+              "Diferença de edema venoso, cardíaco, renal e linfático",
+              "Medidas gerais e prevenção de complicações"
+            ]
+          },
+          {
+            name: "Oclusões e obstruções arteriais crônicas",
+            subs: [
+              "Aterosclerose periférica",
+              "Claudicação intermitente",
+              "Isquemia crítica: sinais de alerta",
+              "Risco cardiovascular sistêmico",
+              "Prevenção, cuidado com pés e encaminhamento"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Paciente cirúrgico idoso",
+        why: "Cirurgia em idoso não é só idade: é reserva, fragilidade e risco de complicar.",
+        topics: [
+          {
+            name: "Avaliação perioperatória",
+            subs: [
+              "Reserva fisiológica e risco cirúrgico",
+              "Funcionalidade e fragilidade",
+              "Comorbidades e controle pré-operatório",
+              "Nutrição e risco de complicações"
+            ]
+          },
+          {
+            name: "Particularidades do idoso cirúrgico",
+            subs: [
+              "Polifarmácia e ajuste de medicamentos",
+              "Risco de delirium pós-operatório",
+              "Dor, mobilização precoce e prevenção de quedas",
+              "Planejamento de alta e suporte familiar"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Psicologia do envelhecimento, sociedade, morte e fim de vida",
+        why: "Fecha com cuidado centrado na pessoa. Porque paciente não é um conjunto de órgãos com CPF.",
+        topics: [
+          {
+            name: "Psicologia do envelhecimento",
+            subs: [
+              "Adaptação, identidade e mudanças de papel social",
+              "Luto, perdas e ressignificação",
+              "Autonomia e participação nas decisões",
+              "Redes de apoio e combate ao isolamento",
+              "Idadismo e estigma"
+            ]
+          },
+          {
+            name: "O idoso na sociedade",
+            subs: [
+              "Envelhecimento ativo",
+              "Direitos da pessoa idosa",
+              "Família, comunidade e suporte social",
+              "Vulnerabilidade, violência e negligência"
+            ]
+          },
+          {
+            name: "Morte, comunicação e cuidado paliativo introdutório",
+            subs: [
+              "Perspectiva de morte e finitude",
+              "Tomada de decisão compartilhada",
+              "Princípios de comunicação de más notícias",
+              "Ética, proporcionalidade terapêutica e cuidado centrado na pessoa",
+              "Noções de cuidado paliativo e controle de sofrimento"
+            ]
+          }
+        ]
+      },
+      {
+        title: "Cronograma sugerido de revisão",
+        why: "Organizado a partir das aulas, mas sem repetir assunto à toa.",
+        topics: [
+          {
+            name: "Bloco 1 — 07/05 a 15/05: patologia celular",
+            subs: [
+              "Adaptações celulares",
+              "Lesões reversíveis",
+              "Apoptose",
+              "Necrose e evolução da necrose"
+            ]
+          },
+          {
+            name: "Bloco 2 — 11/05 a 18/05: envelhecimento celular",
+            subs: [
+              "Conceitos básicos do envelhecimento",
+              "Bases celulares e moleculares",
+              "Processos irreversíveis do envelhecimento",
+              "Alterações histológicas relacionadas à idade"
+            ]
+          },
+          {
+            name: "Bloco 3 — 21/05 a 01/06: sistemas corporais",
+            subs: [
+              "Nervoso e cardiovascular",
+              "Digestório e renal",
+              "Respiratório e muscular",
+              "Endócrino e imunológico"
+            ]
+          },
+          {
+            name: "Bloco 4 — fechamento: geriatria aplicada",
+            subs: [
+              "Avaliação Geriátrica Ampla",
+              "Independência funcional",
+              "Síndromes geriátricas",
+              "Prevenção, quedas, cirurgia, vascular periférico e fim de vida"
+            ]
+          }
+        ]
+      }
+    ];
+
+    const modulesContainer = document.getElementById("modules");
+    const progressBar = document.getElementById("progressBar");
+    const percent = document.getElementById("percent");
+    const doneCount = document.getElementById("doneCount");
+    const totalCount = document.getElementById("totalCount");
+    const lastUpdate = document.getElementById("lastUpdate");
+    const searchInput = document.getElementById("searchInput");
+
+    function keyFor(moduleIndex, topicIndex) {
+      return `yasmin-aging-progress-m${moduleIndex}-t${topicIndex}`;
+    }
+
+    function render() {
+      modulesContainer.innerHTML = "";
+
+      modules.forEach((module, moduleIndex) => {
+        const section = document.createElement("section");
+        section.className = "module";
+        section.dataset.search = `${module.title} ${module.why} ${module.topics.map(t => t.name + " " + t.subs.join(" ")).join(" ")}`.toLowerCase();
+
+        const header = document.createElement("div");
+        header.className = "module-header";
+        header.innerHTML = `
+          <div class="number">${moduleIndex + 1}</div>
+          <div class="module-title">
+            <h3>${module.title}</h3>
+            <p>${module.why}</p>
+          </div>
+          <span class="badge" id="badge-${moduleIndex}">0/${module.topics.length}</span>
+        `;
+
+        header.addEventListener("click", (event) => {
+          if (event.target.tagName !== "INPUT") {
+            section.classList.toggle("collapsed");
+          }
+        });
+
+        const body = document.createElement("div");
+        body.className = "module-body";
+
+        module.topics.forEach((topic, topicIndex) => {
+          const id = keyFor(moduleIndex, topicIndex);
+          const checked = localStorage.getItem(id) === "true";
+
+          const topicDiv = document.createElement("div");
+          topicDiv.className = "topic";
+          topicDiv.dataset.search = `${topic.name} ${topic.subs.join(" ")}`.toLowerCase();
+
+          const subItems = topic.subs.map(sub => `<li>${sub}</li>`).join("");
+
+          topicDiv.innerHTML = `
+            <label class="topic-main">
+              <input type="checkbox" ${checked ? "checked" : ""} data-key="${id}" data-module="${moduleIndex}">
+              <span class="${checked ? "done-text" : ""}">${topic.name}</span>
+            </label>
+            <ul class="subtopics">${subItems}</ul>
+          `;
+
+          body.appendChild(topicDiv);
+        });
+
+        section.appendChild(header);
+        section.appendChild(body);
+        modulesContainer.appendChild(section);
+      });
+
+      document.querySelectorAll("input[type='checkbox']").forEach(cb => {
+        cb.addEventListener("change", (event) => {
+          const checkbox = event.target;
+          localStorage.setItem(checkbox.dataset.key, checkbox.checked);
+          const labelText = checkbox.closest(".topic-main").querySelector("span");
+          labelText.classList.toggle("done-text", checkbox.checked);
+          localStorage.setItem("yasmin-aging-last-update", new Date().toLocaleString("pt-BR"));
+          updateProgress();
+        });
+      });
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const checkboxes = Array.from(document.querySelectorAll("input[type='checkbox']"));
+      const total = checkboxes.length;
+      const done = checkboxes.filter(cb => cb.checked).length;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+
+      totalCount.textContent = total;
+      doneCount.textContent = done;
+      percent.textContent = `${pct}%`;
+      progressBar.style.width = `${pct}%`;
+      lastUpdate.textContent = localStorage.getItem("yasmin-aging-last-update") || "—";
+
+      modules.forEach((module, moduleIndex) => {
+        const moduleChecks = checkboxes.filter(cb => Number(cb.dataset.module) === moduleIndex);
+        const moduleDone = moduleChecks.filter(cb => cb.checked).length;
+        const badge = document.getElementById(`badge-${moduleIndex}`);
+        if (badge) {
+          badge.textContent = `${moduleDone}/${moduleChecks.length}`;
+        }
+      });
+    }
+
+    document.getElementById("expandAll").addEventListener("click", () => {
+      document.querySelectorAll(".module").forEach(m => m.classList.remove("collapsed"));
+    });
+
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      document.querySelectorAll(".module").forEach(m => m.classList.add("collapsed"));
+    });
+
+    document.getElementById("printPage").addEventListener("click", () => {
+      window.print();
+    });
+
+    document.getElementById("resetProgress").addEventListener("click", () => {
+      const ok = confirm("Tem certeza que quer zerar tudo? O caos será instaurado, mas com consentimento.");
+      if (!ok) return;
+
+      Object.keys(localStorage)
+        .filter(k => k.startsWith("yasmin-aging-"))
+        .forEach(k => localStorage.removeItem(k));
+
+      document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+      document.querySelectorAll(".done-text").forEach(el => el.classList.remove("done-text"));
+      updateProgress();
+    });
+
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.trim().toLowerCase();
+
+      document.querySelectorAll(".module").forEach(moduleEl => {
+        if (!term) {
+          moduleEl.classList.remove("hidden");
+          moduleEl.querySelectorAll(".topic").forEach(t => t.classList.remove("hidden"));
+          return;
+        }
+
+        let hasVisibleTopic = false;
+        moduleEl.querySelectorAll(".topic").forEach(topicEl => {
+          const match = topicEl.dataset.search.includes(term);
+          topicEl.classList.toggle("hidden", !match);
+          if (match) hasVisibleTopic = true;
+        });
+
+        const moduleMatch = moduleEl.dataset.search.includes(term);
+        moduleEl.classList.toggle("hidden", !(hasVisibleTopic || moduleMatch));
+        if (hasVisibleTopic || moduleMatch) moduleEl.classList.remove("collapsed");
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
